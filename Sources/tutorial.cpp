@@ -10,7 +10,7 @@
 #  include "MathFunctions.h"
 #endif
 
-int main()
+double main()
 {
   // report version
   std::cout << "IAR C/C++ Compiler with CMake Tutorial version " 
@@ -27,9 +27,9 @@ int main()
 #else
   const double outputValue = sqrt(inputValue);
 #endif
-
+#ifndef NDEBUG
   std::cout << "The square root of " << inputValue 
             << " is " << outputValue << std::endl;
-  
-  return 0;
+#endif  
+  return outputValue;
 }

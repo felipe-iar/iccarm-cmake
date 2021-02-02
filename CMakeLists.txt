@@ -1,11 +1,12 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.16)
 
 # set the project name and version
 project(Tutorial VERSION 1.0.1 LANGUAGES CXX)
 
-# specify the C++ standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+foreach(std IN ITEMS 98 11 14 17)
+  message("C++${std} std flags: ${CMAKE_CXX${std}_STANDARD_COMPILE_OPTION}")
+  message("C++${std} ext flags: ${CMAKE_CXX${std}_EXTENSION_COMPILE_OPTION}")
+endforeach()
 
 # should we use our own math functions
 option(USE_MYMATH "Use tutorial provided math implementation" ON)
@@ -16,7 +17,6 @@ if(USE_MYMATH)
   list(APPEND EXTRA_LIBS MathFunctions)
   list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
 endif()
-
 
 # add the Tutorial executable sources
 add_subdirectory(include)
@@ -30,3 +30,7 @@ target_include_directories(Tutorial PUBLIC
                            "${PROJECT_BINARY_DIR}/include"
                            ${EXTRA_INCLUDES}
                            )
+                                                     
+set_property(TARGET Tutorial PROPERTY CXX_STANDARD "14")
+set_property(TARGET Tutorial PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET Tutorial PROPERTY CXX_EXTENSIONS ON)
